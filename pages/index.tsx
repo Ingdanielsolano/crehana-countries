@@ -1,7 +1,49 @@
+import { gql, useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
+
+const countryFragment = `
+  code
+  name
+`;
+
+const useCountries = () => {
+  const countries = gql`
+    query GetAllCountries {
+      countries {
+        ${countryFragment}
+      }
+    }
+  `;
+  return useQuery(countries);
+};
+
+const useCountry = (code: string) => {
+  const country = gql`
+    query GetCountry($countryCode: ID!) {
+      country(code: $countryCode) {
+        ${countryFragment}
+      }
+    }
+  `;
+  return useQuery(country, {
+    variables: {
+      countryCode: code,
+    },
+  });
+};
+
+const CountryView = () => {
+  const { data, loading, error } = useCountry("AD");
+
+  return <>{data?.code}</>;
+};
 
 const Home: NextPage = () => {
+  const [viewDetail, setViewDetail] = useState(false);
+  const { data, loading, error } = useCountries();
+
   return (
     <>
       <Head>
@@ -12,6 +54,10 @@ const Home: NextPage = () => {
 
       <main className="home">
         <h1 className="home__title">Countries</h1>
+        {viewDetail && <CountryView />}
+        <button onClick={() => setViewDetail(!viewDetail)}>
+          {viewDetail ? "Hide" : "View"} detail
+        </button>
       </main>
     </>
   );
