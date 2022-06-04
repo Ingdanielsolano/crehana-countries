@@ -1,0 +1,25 @@
+.home {
+  background-color: var(--colors-black);
+  min-height: 100vh;
+  font-size: var(--font-large);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+    color: var(--colors-white);
+    a {
+      color: var(--colors-blue);
+      text-decoration: none;
+    }
+  }
+
+  &__subtitle {
+    color: var(--colors-white);
+    a {
+      color: var(--colors-blue);
+      text-decoration: none;
+    }
+  }
+}
