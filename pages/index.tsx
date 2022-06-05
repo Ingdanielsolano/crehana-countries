@@ -2,6 +2,7 @@ import getClient from "@common/connection/apolloClient";
 import { Country, GetAllCountriesDocument } from "@service/graphql";
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
+import groupBy from "../common/groupBy";
 import CountryList from "../components/CountryList/CountryList";
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -36,6 +37,11 @@ export const getStaticProps: GetStaticProps<{
       throw new Error("Can't get countries");
 
     let countries = response.data.countries as Country[];
+    countries.sort((a, b) => {
+      if (a.name < b.name) return 1;
+      if (a.name > b.name) return -1;
+      return 0;
+    });
 
     return {
       props: {

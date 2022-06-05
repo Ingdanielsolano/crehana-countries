@@ -35,8 +35,6 @@ const CountryList: FC<CountryListProps> = ({ countries }) => {
     code: "",
   });
 
-  console.log(filterCountriesQuery);
-
   useEffect(() => {
     if (!filterCountriesQuery.data?.countries) return;
 
@@ -48,8 +46,10 @@ const CountryList: FC<CountryListProps> = ({ countries }) => {
       filters.code === "" &&
       filters.continent.length === 0 &&
       filters.currency.length === 0
-    )
+    ) {
+      filterCountries();
       return;
+    }
 
     const variables: CountryFilterInput = {
       code: {
@@ -77,23 +77,20 @@ const CountryList: FC<CountryListProps> = ({ countries }) => {
   return (
     <div className="country-list">
       <Loader visible={filterCountriesQuery.loading} />
-      <h1 className="country-list__title">Countries</h1>
-      <div className="country-list__searbar">
-        <CountrySearchBar
-          countries={countries}
-          searchCountries={(value: string) => {
-            const actualFilters = { ...filters };
-            actualFilters.code = value;
-            setFilters(actualFilters);
-          }}
-          filterCountriesByContinent={(values) => {
-            setFilters({ ...filters, continent: values });
-          }}
-          filterCountriesByCurrency={(values) => {
-            setFilters({ ...filters, currency: values });
-          }}
-        />
-      </div>
+      <CountrySearchBar
+        countries={countries}
+        searchCountries={(value: string) => {
+          const actualFilters = { ...filters };
+          actualFilters.code = value;
+          setFilters(actualFilters);
+        }}
+        filterCountriesByContinent={(values) => {
+          setFilters({ ...filters, continent: values });
+        }}
+        filterCountriesByCurrency={(values) => {
+          setFilters({ ...filters, currency: values });
+        }}
+      />
       <div className="country-list__list">
         {filteredCountries.map((country) => (
           <CountryCard key={`Country-key-${country.code}`} country={country} />

@@ -1,0 +1,31 @@
+.country-search {
+  width: 100%;
+
+  &__filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 30px;
+    gap: 30px;
+
+    .ant-select {
+      background: var(--colors-white);
+      font-size: var(--font-s-medium);
+    }
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border: 1px solid #888888;
+      border-radius: 5px;
+    }
+  }
+
+  &__country {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  &__title {
+    font-size: 32px;
+  }
+}
