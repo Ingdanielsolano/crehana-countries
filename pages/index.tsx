@@ -1,16 +1,7 @@
-import { useLazyQuery } from "@apollo/client";
+import getClient from "@common/connection/apolloClient";
+import { Country, GetAllCountriesDocument } from "@service/graphql";
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import getClient from "@common/connection/apolloClient";
-import CountryCard from "@components/CountryList/components/CountryCard";
-import CountrySearchBar from "@components/CountryList/components/CountrySearchBar";
-import Loader from "@components/loader";
-import {
-  Country,
-  GetAllCountriesDocument,
-  GetCountryDocument,
-} from "@service/graphql";
 import CountryList from "../components/CountryList/CountryList";
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
