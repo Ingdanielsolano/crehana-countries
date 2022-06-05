@@ -5,7 +5,7 @@
       "@styles/*": ["styles/*"],
       "@components/*": ["components/*"],
       "@common/*": ["common/*"],
-      "@hooks/*": ["hooks/*"]
+      "@service/*": ["service/*"],
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

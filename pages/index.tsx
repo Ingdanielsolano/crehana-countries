@@ -2,31 +2,20 @@ import { useLazyQuery } from "@apollo/client";
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import getClient from "../common/connection/apolloClient";
-import CountryCard from "../components/home/CountryCard";
-import CountrySearchBar from "../components/home/CountrySearchBar";
-import Loader from "../components/loader";
+import getClient from "@common/connection/apolloClient";
+import CountryCard from "@components/CountryList/components/CountryCard";
+import CountrySearchBar from "@components/CountryList/components/CountrySearchBar";
+import Loader from "@components/loader";
 import {
   Country,
   GetAllCountriesDocument,
   GetCountryDocument,
-} from "../service/graphql";
+} from "@service/graphql";
+import CountryList from "../components/CountryList/CountryList";
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   countries,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [filteredCountries, setFilteredCountries] = useState(countries);
-  const [searchCountry, { data, loading, error }] =
-    useLazyQuery(GetCountryDocument);
-
-  console.log({ loading, data });
-
-  useEffect(() => {
-    if (!data?.country) return;
-    const country = data.country as Country;
-    setFilteredCountries([country]);
-  }, [data]);
-
   return (
     <>
       <Head>
@@ -35,29 +24,8 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="home">
-        <Loader visible={loading} />
-        <h1 className="home__title">Countries</h1>
-        <div className="home__searbar">
-          <CountrySearchBar
-            countries={countries}
-            filterCountries={(value: string) =>
-              searchCountry({
-                variables: {
-                  countryCode: value,
-                },
-              })
-            }
-          />
-        </div>
-        <div className="home__list">
-          {filteredCountries.map((country) => (
-            <CountryCard
-              key={`Country-key-${country.code}`}
-              country={country}
-            />
-          ))}
-        </div>
+      <main>
+        <CountryList countries={countries} />
       </main>
     </>
   );

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { FC, useState } from "react";
-import { Country } from "../../service/graphql";
+import { Country } from "../../../service/graphql";
 
 interface CountrySearchProps {
   countries: Country[];

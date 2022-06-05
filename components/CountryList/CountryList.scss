@@ -1,4 +1,4 @@
-.home {
+.country-list {
   background-color: var(--colors-white);
   color: var(--colors-black);
   min-height: 100vh;
@@ -38,5 +38,13 @@
     border-radius: 0.5rem;
     box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45);
     justify-self: center;
+    cursor: pointer;
+
+    img {
+      z-index: 0;
+    }
+  }
+  .country-card:hover {
+    transform: scale(1.05);
   }
 }
