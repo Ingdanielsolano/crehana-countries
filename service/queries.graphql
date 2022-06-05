@@ -1,0 +1,53 @@
+query GetAllCountries {
+  countries {
+    code
+    name
+    native
+    phone
+    continent {
+      code
+      name
+    }
+    capital
+    currency
+    languages {
+      code
+      name
+      native
+      rtl
+    }
+    emoji
+    emojiU
+    states {
+      code
+      name
+    }
+  }
+}
+
+query GetCountry($countryCode: ID!) {
+  country(code: $countryCode) {
+    code
+    name
+    native
+    phone
+    continent {
+      code
+      name
+    }
+    capital
+    currency
+    languages {
+      code
+      name
+      native
+      rtl
+    }
+    emoji
+    emojiU
+    states {
+      code
+      name
+    }
+  }
+}

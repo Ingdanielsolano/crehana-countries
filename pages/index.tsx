@@ -2,47 +2,24 @@ import { gql, useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-
-const countryFragment = `
-  code
-  name
-`;
-
-const useCountries = () => {
-  const countries = gql`
-    query GetAllCountries {
-      countries {
-        ${countryFragment}
-      }
-    }
-  `;
-  return useQuery(countries);
-};
-
-const useCountry = (code: string) => {
-  const country = gql`
-    query GetCountry($countryCode: ID!) {
-      country(code: $countryCode) {
-        ${countryFragment}
-      }
-    }
-  `;
-  return useQuery(country, {
-    variables: {
-      countryCode: code,
-    },
-  });
-};
+import {
+  GetAllCountriesDocument,
+  GetCountryDocument,
+} from "../service/graphql";
 
 const CountryView = () => {
-  const { data, loading, error } = useCountry("AD");
+  const { data, loading, error } = useQuery(GetCountryDocument, {
+    variables: {
+      countryCode: "AD",
+    },
+  });
 
-  return <>{data?.code}</>;
+  return <>{data?.country?.code}</>;
 };
 
 const Home: NextPage = () => {
   const [viewDetail, setViewDetail] = useState(false);
-  const { data, loading, error } = useCountries();
+  const { data, loading, error } = useQuery(GetAllCountriesDocument);
 
   return (
     <>
