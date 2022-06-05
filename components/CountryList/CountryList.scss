@@ -25,10 +25,22 @@
   &__list {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, 1fr);
     align-items: center;
     justify-content: center;
     margin-top: 20px;
     gap: 20px;
+  }
+
+  @media (min-width: $large) {
+    &__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: $xx-large) {
+    &__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 }
