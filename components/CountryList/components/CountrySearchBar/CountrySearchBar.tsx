@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, useState } from "react";
-import { Continent, Country, GetAllContinentsDocument } from "@service/graphql";
-import { Select, Input, AutoComplete } from "antd";
 import { useQuery } from "@apollo/client";
-import { SearchOutlined } from "@ant-design/icons";
+import { Country, GetAllContinentsDocument } from "@service/graphql";
+import { AutoComplete, Input, Select } from "antd";
+import SearchSvg from "@public/icons/search.svg";
+import { FC, useState } from "react";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -22,6 +22,7 @@ const CountrySearchBar: FC<CountrySearchProps> = ({
   filterCountriesByCurrency,
 }) => {
   const continentQuery = useQuery(GetAllContinentsDocument);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const [currencies] = useState<string[]>([
     ...new Set(
       countries
@@ -57,30 +58,45 @@ const CountrySearchBar: FC<CountrySearchProps> = ({
         </Select>
       </div>
       <div className="country-search__country">
-        <h2 className="country-search__title">Países</h2>
-        <AutoComplete
-          className="country-search__input"
-          allowClear
-          options={countries.map(({ code, name }) => ({
-            label: name,
-            value: code,
-          }))}
-          onChange={(e) => setSearchValue(e)}
-          onClear={() => {
-            setSearchValue("");
-            searchCountries("");
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") searchCountries(searchValue);
-          }}
-          onSelect={(selected: string) => searchCountries(selected)}
-        >
-          <Input
-            prefix={
-              <SearchOutlined onClick={(e) => searchCountries(searchValue)} />
-            }
-          />
-        </AutoComplete>
+        <h2>Países</h2>
+        {!showSearch && (
+          <button
+            className="country-search__search-icon"
+            onClick={() => setShowSearch(true)}
+          >
+            <img src={SearchSvg} alt="Search" />
+          </button>
+        )}
+        {showSearch && (
+          <AutoComplete
+            allowClear
+            options={countries.map(({ code, name }) => ({
+              label: name,
+              value: code,
+            }))}
+            onChange={(e) => setSearchValue(e)}
+            onClear={() => {
+              setSearchValue("");
+              searchCountries("");
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") searchCountries(searchValue);
+            }}
+            onSelect={(selected: string) => searchCountries(selected)}
+          >
+            <Input
+              prefix={
+                <button className="country-search__input-icon">
+                  <img
+                    src={SearchSvg}
+                    // onClick={(e) => searchCountries(searchValue)}
+                    alt="Search"
+                  />
+                </button>
+              }
+            />
+          </AutoComplete>
+        )}
       </div>
     </div>
   );

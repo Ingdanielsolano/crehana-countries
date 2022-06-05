@@ -23,9 +23,45 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+    align-items: center;
+
+    .ant-select {
+      max-height: 32px;
+    }
+
+    .ant-input-affix-wrapper {
+      border: 1px solid #888888;
+      border-radius: 5px;
+      padding-left: 0px;
+    }
   }
 
-  &__title {
+  h2 {
+    margin: 0;
     font-size: 32px;
+  }
+
+  &__search-icon {
+    border: none;
+    justify-self: end;
+    background-color: transparent;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__input-icon {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
