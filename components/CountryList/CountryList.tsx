@@ -1,6 +1,12 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { FC, useEffect, useState } from "react";
-import { Country, GetCountryDocument } from "../../service/graphql";
+import {
+  Continent,
+  Country,
+  CountryFilterInput,
+  GetAllContinentsDocument,
+  GetAllCountriesDocument,
+} from "../../service/graphql";
 import Loader from "../loader";
 import CountryCard from "./components/CountryCard/CountryCard";
 import CountrySearchBar from "./components/CountrySearchBar/CountrySearchBar";
@@ -9,33 +15,83 @@ interface CountryListProps {
   countries: Country[];
 }
 
-const CountryList: FC<CountryListProps> = ({ countries }) => {
-  const [filteredCountries, setFilteredCountries] = useState(countries);
-  const [searchCountry, { data, loading, error }] =
-    useLazyQuery(GetCountryDocument);
+interface CountryFilters {
+  currency: string[];
+  continent: string[];
+  code: string;
+}
 
-  console.log({ loading, data });
+const CountryList: FC<CountryListProps> = ({ countries }) => {
+  const [filterCountries, filterCountriesQuery] = useLazyQuery(
+    GetAllCountriesDocument
+  );
+
+  const [filteredCountries, setFilteredCountries] =
+    useState<Country[]>(countries);
+
+  const [filters, setFilters] = useState<CountryFilters>({
+    currency: [],
+    continent: [],
+    code: "",
+  });
+
+  console.log(filterCountriesQuery);
 
   useEffect(() => {
-    if (!data?.country) return;
-    const country = data.country as Country;
-    setFilteredCountries([country]);
-  }, [data]);
+    if (!filterCountriesQuery.data?.countries) return;
+
+    setFilteredCountries(filterCountriesQuery.data.countries as Country[]);
+  }, [filterCountriesQuery.data]);
+
+  useEffect(() => {
+    if (
+      filters.code === "" &&
+      filters.continent.length === 0 &&
+      filters.currency.length === 0
+    )
+      return;
+
+    const variables: CountryFilterInput = {
+      code: {
+        regex: filters.code,
+      },
+    };
+
+    if (filters.continent.length > 0)
+      variables.continent = {
+        in: filters.continent,
+      };
+
+    if (filters.currency.length > 0)
+      variables.currency = {
+        in: filters.currency,
+      };
+
+    filterCountries({
+      variables: {
+        countryFilters: variables,
+      },
+    });
+  }, [filters, filterCountries]);
 
   return (
     <div className="country-list">
-      <Loader visible={loading} />
+      <Loader visible={filterCountriesQuery.loading} />
       <h1 className="country-list__title">Countries</h1>
       <div className="country-list__searbar">
         <CountrySearchBar
           countries={countries}
-          filterCountries={(value: string) =>
-            searchCountry({
-              variables: {
-                countryCode: value,
-              },
-            })
-          }
+          searchCountries={(value: string) => {
+            const actualFilters = { ...filters };
+            actualFilters.code = value;
+            setFilters(actualFilters);
+          }}
+          filterCountriesByContinent={(values) => {
+            setFilters({ ...filters, continent: values });
+          }}
+          filterCountriesByCurrency={(values) => {
+            setFilters({ ...filters, currency: values });
+          }}
         />
       </div>
       <div className="country-list__list">
