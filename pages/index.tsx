@@ -1,13 +1,11 @@
-import { LoadingOutlined } from "@ant-design/icons";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { Modal } from "antd";
+import { useLazyQuery } from "@apollo/client";
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import getClient from "../common/connection/apolloClient";
 import CountryCard from "../components/home/CountryCard";
-import Loader from "../components/loader";
 import CountrySearchBar from "../components/home/CountrySearchBar";
+import Loader from "../components/loader";
 import {
   Country,
   GetAllCountriesDocument,
@@ -21,11 +19,13 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const [searchCountry, { data, loading, error }] =
     useLazyQuery(GetCountryDocument);
 
-  const [customLoading, setCustomLoading] = useState(false);
+  console.log({ loading, data });
 
   useEffect(() => {
-    setCustomLoading(true);
-  }, []);
+    if (!data?.country) return;
+    const country = data.country as Country;
+    setFilteredCountries([country]);
+  }, [data]);
 
   return (
     <>
@@ -36,8 +36,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </Head>
 
       <main className="home">
-        {/* <Loader /> */}
-        <Loader visible={customLoading} />
+        <Loader visible={loading} />
         <h1 className="home__title">Countries</h1>
         <div className="home__searbar">
           <CountrySearchBar

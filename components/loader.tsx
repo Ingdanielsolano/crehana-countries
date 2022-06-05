@@ -10,9 +10,8 @@ const Loader: FC<LoaderProps> = ({ visible }) => (
   <Modal
     visible={visible}
     footer={false}
-    closable={false}
     centered
-    transitionName="ease"
+    closable={false}
     className="loader"
     maskStyle={{
       backgroundColor: "transparent",
