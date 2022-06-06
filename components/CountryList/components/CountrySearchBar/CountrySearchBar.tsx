@@ -94,6 +94,7 @@ const CountrySearchBar: FC<CountrySearchProps> = ({
                   />
                 </button>
               }
+              placeholder="Filtrar por país"
             />
           </AutoComplete>
         )}

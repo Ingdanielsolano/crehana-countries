@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, prettyDOM, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import countryMock from "../../__mocks__/CountryMock";
 import CountryDetail from "./CountryDetail";
 
