@@ -11,7 +11,24 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     <>
       <Head>
         <title>Listado de países</title>
-        <meta name="description" content="Listado de países" />
+        <meta
+          name="description"
+          content="Listado de países para Prueba de Crehana"
+        />
+        <meta property="og:title" content="Listado de países" />
+        <meta
+          property="og:description"
+          content="Listado de países para Prueba de Crehana"
+        />
+        <meta
+          property="og:image"
+          content="https://upload.wikimedia.org/wikipedia/commons/5/55/Mapa_del_mundo_en_1970.jpg"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://crehana-countries.vercel.app/"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

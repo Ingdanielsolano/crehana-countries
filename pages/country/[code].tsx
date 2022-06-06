@@ -27,7 +27,21 @@ const CountryDetailPage: NextPage<
     <>
       <Head>
         <title>{country.name}</title>
-        <meta name="description" content="Listado de países" />
+        <meta name="description" content={`Detalle del país ${country.name}`} />
+        <meta property="og:title" content={`${country.name}`} />
+        <meta
+          property="og:description"
+          content={`Detalle del país ${country.name}`}
+        />
+        <meta
+          property="og:image"
+          content={`https://countryflagsapi.com/png/${country.code}`}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://crehana-countries.vercel.app/country/${country.code}`}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
