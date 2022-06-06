@@ -71,8 +71,6 @@ export const getStaticPaths: GetStaticPaths<{
       params: { code: country.code },
     }));
 
-    console.log(paths);
-
     return { paths, fallback: "blocking" };
   } catch (error) {
     console.log(error);
