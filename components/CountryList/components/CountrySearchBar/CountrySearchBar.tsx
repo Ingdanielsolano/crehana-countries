@@ -2,7 +2,6 @@
 import { useQuery } from "@apollo/client";
 import { Country, GetAllContinentsDocument } from "@service/graphql";
 import { AutoComplete, Input, Select } from "antd";
-import SearchSvg from "@public/icons/search.svg";
 import { FC, useState } from "react";
 
 const { Option } = Select;
@@ -64,7 +63,7 @@ const CountrySearchBar: FC<CountrySearchProps> = ({
             className="country-search__search-icon"
             onClick={() => setShowSearch(true)}
           >
-            <img src={SearchSvg} alt="Search" />
+            <img src="/icons/search.svg" alt="Search" />
           </button>
         )}
         {showSearch && (
@@ -88,7 +87,7 @@ const CountrySearchBar: FC<CountrySearchProps> = ({
               prefix={
                 <button className="country-search__input-icon">
                   <img
-                    src={SearchSvg}
+                    src="/icons/search.svg"
                     // onClick={(e) => searchCountries(searchValue)}
                     alt="Search"
                   />
