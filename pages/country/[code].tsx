@@ -12,6 +12,7 @@ import type {
 } from "next";
 import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
+import CountryDetail from "../../components/CountryDetail/CountryDetail";
 
 interface ContextParams {
   params: {
@@ -19,30 +20,19 @@ interface ContextParams {
   };
 }
 
-const CountryDetail: NextPage<
+const CountryDetailPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ country }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
-        <title>Listado de países</title>
+        <title>{country.name}</title>
         <meta name="description" content="Listado de países" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <img src={`https://countryflagsapi.com/png/${country.code}`} />
-        <p>{country.name}</p>
-        <p>{country.code}</p>
-        <p>{country.capital}</p>
-        <p>{country.continent.name}</p>
-        <p>{country.currency}</p>
-        <p>{country.emoji}</p>
-        <p>{country.emojiU}</p>
-        <p>{country.languages.map((language) => language.name)}</p>
-        <p>{country.native}</p>
-        <p>{country.phone}</p>
-        <p>{country.states.map((state) => state.name)}</p>
+        <CountryDetail country={country} />
       </main>
     </>
   );
@@ -102,4 +92,4 @@ export const getStaticProps: GetStaticProps<{
   };
 };
 
-export default CountryDetail;
+export default CountryDetailPage;

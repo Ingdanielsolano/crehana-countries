@@ -1,8 +1,8 @@
 import { ApolloProvider } from "@apollo/client";
 import getClient from "@common/connection/apolloClient";
 import type { AppProps } from "next/app";
-import "../sass/main.scss";
 import "antd/dist/antd.css";
+import "../sass/main.scss";
 
 const client = getClient();
 
