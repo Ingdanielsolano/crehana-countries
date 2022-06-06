@@ -32,7 +32,13 @@
     gap: 20px;
   }
 
-  @media (min-width: $large) {
+  @media (min-width: $medium) {
+    &__list {
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+    }
+  }
+
+  @media (min-width: $x-large) {
     &__list {
       grid-template-columns: repeat(3, minmax(320px, 1fr));
     }
